@@ -1,0 +1,17 @@
+h1{
+    text-align: center;
+}
+
+.userWeapons{
+    margin-left: auto; 
+    border: thick solid rgb(25, 25, 119); 
+}
+
+.botWeapons{
+    border: thick solid red; 
+}
+
+.start{
+    text-align: center;
+    margin:auto;
+}
