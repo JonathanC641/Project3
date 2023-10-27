@@ -5,13 +5,23 @@ h1{
 .userWeapons{
     margin-left: auto; 
     border: thick solid rgb(25, 25, 119); 
+    float: right; 
 }
 
 .botWeapons{
-    border: thick solid red; 
+    border: thick solid red;
+    float: left; 
 }
 
-.start{
+.roundTracker{
     text-align: center;
-    margin:auto;
+    padding-bottom: 85px;
+}
+
+.weaponsDisplay{
+    text-align: center;
+}
+
+th{
+    text-align: center;
 }
