@@ -18,6 +18,10 @@ h1{
     padding-bottom: 85px;
 }
 
+.roundTracker td{
+    border: thick solid black;
+}
+
 .weaponsDisplay{
     text-align: center;
 }

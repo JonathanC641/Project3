@@ -1,5 +1,5 @@
 const weapons = ['rock', 'paper', 'scissors']; 
-let userTable, botTable, score, roundLog, itemCount, count, weaponChoice;  
+let userTable, botTable, score, roundLog, playerItemCount, count, weaponChoice;  
 
 
 function initialize(){  
@@ -12,9 +12,13 @@ function initialize(){
 
 }
 
-
+function updateLog(newLog){
+    let newCell = roundLog.insertCell();
+    newCell.innerHTML = newLog; 
+}
 
 function addItem(){
+    
     count+=1; 
 }
 
@@ -22,28 +26,31 @@ function removeItem(){
     count-=1; 
 }
 
-function computerChoice(){}
+function computerChoice(){
+    // let randNum = parseInt(Math.random() * 3);
+    // return weapons[randNum]; 
+    return 'scissors'; 
+}
 function userChoice(){}
 
-function fight(user,bot){
-    if(user === bot){
-        return false; 
-    }
-
-}
 
 function game(weapon){
     itemCount = document.getElementById(weapon); 
-
-    let userWeapon = weapon === 'rock' ? 'rock' : weapon === 'paper' ? 'scissors' : 'paper'; 
+    let selectedWeapon = () =>{
+        let type = str(weapon); 
+        return type.slice(0,type.length-4); 
+    }
+    let userWeapon = selectedWeapon === 'rock' ? 'rock' : weapon === 'paper' ? 'paper' : 'scissors'; 
     console.log(userWeapon); 
-    let botChoice = computerChoice(); 
-    
-    
+    let botWeapon = computerChoice(); 
+
+    if(userWeapon === botWeapon){
+        updateLog("No winner.");
+    }
     
 
 }
 
 function display(){
-    itemCount.innerHTML = count; 
+    playerItemCount.innerHTML = count; 
 }
