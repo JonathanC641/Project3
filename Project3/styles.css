@@ -8,6 +8,11 @@ h1{
     float: right; 
 }
 
+.userWeapons img{
+    width: 50px; 
+    
+}
+
 .botWeapons{
     border: thick solid red;
     float: left; 

@@ -24,13 +24,13 @@
                 <table id="player" class="userWeapons">
                     <th>Weapons</th>
                     <tr>
-                        <td><button onclick="game('rockUser');"><!--<img src="scissors.jpg">--><span id="rockUser">5</span></button></td>
+                        <td><button onclick="game('rockUser');"><img src="rock.jpg"><span id="rockUser">5</span></button></td>
                     </tr>
                     <tr>
-                        <td><button onclick="game('paperUser');"><span id="paperUser">5</span></button></td>                    
+                        <td><button onclick="game('paperUser');"><img src ="paper.jpg"><span id="paperUser">5</span></button></td>                    
                     </tr>
                     <tr>
-                        <td><button onclick="game('scissorsUser');"><img src="scissors.jpg"><span id="scissorsUser">5</span></button></td>                    
+                        <td><button onclick="game('scissorsUser');"><img src="scissors.jpg"></button><span id="scissorsUser">5</span></td>                    
                     </tr>
                 </table>
             </div>
@@ -51,12 +51,13 @@
             </div>
             
             <div class="weaponsDisplay">
-                <!-- <img src="scissors.jpg">
-                <img src="scissors.jpg">  -->
+                <img src="" id="userTool">
+                <img src="" id="botTool"> 
             </div>
 
             <!-- <p><span id="status"></span> wins!</p> -->
 
+            <button>Reset</button>
 
         </div>
         
