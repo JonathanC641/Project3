@@ -5,6 +5,10 @@ h1{
 body{
     background-color: darkgrey;
 }
+
+.messageArea{
+    text-align: center;
+}
 .userWeapons{
     margin-left: auto; 
     border: thick solid rgb(25, 25, 119); 

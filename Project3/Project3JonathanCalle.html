@@ -23,13 +23,13 @@
                 <table id="player" class="userWeapons">
                     <th>Weapons</th>
                     <tr>
-                        <td><button onclick="game('rockUser');"><img src="rock.jpg"><span id="rockUser">5</span></button></td>
+                        <td><button onclick="game('rockUser');"><img src="rock.jpg"><span id="count">5</span></button></td>
                     </tr>
                     <tr>
-                        <td><button onclick="game('paperUser');"><img src ="paper.jpg"><span id="paperUser">5</span></button></td>                    
+                        <td><button onclick="game('paperUser');"><img src ="paper.jpg"><span id="count">5</span></button></td>                    
                     </tr>
                     <tr>
-                        <td><button onclick="game('scissorsUser');"><img src="scissors.jpg"></button><span id="scissorsUser">5</span></td>                    
+                        <td><button onclick="game('scissorsUser');"><img src="scissors.jpg"></button><span id="count">5</span></td>                    
                     </tr>
                 </table>
             </div>
@@ -50,21 +50,24 @@
                 </table>
             </div>
             
-            <div class="weaponsDisplay">
+            <div class="userWeapons">
                 <h3>Player</h3>
                 <img src="" id="userTool">
+            </div>
 
+            <div class="botWeapons ">
                 <h3>Computer</h3>
                 <img src="" id="botTool"> 
             </div>
             
 
-            <div id="status">
+            <div class="messageArea"id="status">
                 Message Area
 
             </div>
-
-            <button class="reset" onclick="reset();">Reset</button>
+            <div class="reset">
+                <button onclick="reset();">Reset</button>
+            </div>
 
         </div>
         
