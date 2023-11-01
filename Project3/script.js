@@ -10,7 +10,7 @@ let userTable, botTable, score, roundLog, playerItemCount, botItemCount, playerC
 function initialize(){  
     userTable = document.getElementById("player");
     botTable = document.getElementById("computer");  
-    roundLog = document.querySelector("roundTracker");
+    roundLog = document.querySelector("roundTracker tr");
     botWeaponDisplay = document.getElementById("botTool"); 
     userWeaponDisplay = document.getElementById("userTool"); 
     messageBoard = document.getElementById("status"); 
