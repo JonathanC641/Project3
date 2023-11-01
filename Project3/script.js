@@ -1,7 +1,8 @@
 const weapons = ['rock', 'paper', 'scissors']; 
 const images = ['rock.jpg','paper.jpg', 'scissors.jpg']
+const choiceDealer = [['W','L','T']]
 const imgTools = new Map(); 
-let userTable, botTable, score, roundLog, playerItemCount, botItemCount, playerCount, botCount, weaponChoice, botWeaponDisplay, userWeaponDisplay;  
+let userTable, botTable, score, roundLog, playerItemCount, botItemCount, playerCount, botCount, weaponChoice, botWeaponDisplay, userWeaponDisplay, userDisplay, botDisplay;  
 
 
 function initialize(){  
@@ -11,7 +12,7 @@ function initialize(){
     botWeaponDisplay = document.getElementById("botTool"); 
     userWeaponDisplay = document.getElementById("userTool"); 
 
-    for(let i = 0; i < toolIdentifier; i++){
+    for(let i = 0; i < weapons.length; i++){
         imgTools.set(weapons[i], images[i]); 
     }
 
@@ -21,7 +22,7 @@ function initialize(){
     playerCount = 0;
     botCount = 0; 
     userDisplay = ''; 
-    botDisplay = '' 
+    botDisplay = ''; 
 }
 
 function updateLog(newLog){
@@ -29,62 +30,45 @@ function updateLog(newLog){
     newCell.innerHTML = newLog; 
 }
 
-// function addItem(){
+function addItem(){
     
-// }
+}
 
-// function removeItem(){
-// }
+function removeItem(){
+}
 
 function computerChoice(){
-    // let randNum = parseInt(Math.random() * 3);
-    // return weapons[randNum]; 
-    return 'scissors'; 
+    let randNum = parseInt(Math.random() * 3); 
+    return weapons[randNum]; 
 }
 
 
 function fight(p1,p2){
-    if(p1 === p2){
-        updateLog("No winner.");
-    }else if (p1 === 'rock' && p2 === 'paper' || p1 === 'paper' && p2 === 'rock'){
-        updateLog(`Computer won. Weapon Used: ${p1}`); 
-    }else if(p1 === 'rock' && p2 === 'scissors'){
-        updateLog(`Player won. Weapon Used: ${p1}`); 
-    }else if(p1 === 'paper' && p2 === 'scissors'){
-        updateLog(`Computer won. Weapon Used: ${p1}`); 
-    }else if(p1 === 'paper' && p2 === 'scissors'){
-        updateLog(`Computer won. Weapon Used: ${p1}`); 
-    }else{
-        updateLog();
-    }
 
     
 }
 
 
 function game(weapon){
-    itemCount = document.getElementById(weapon); 
-    let selectedWeapon = () =>{
-        let type = str(weapon); 
-        return type.slice(0,type.length-4); 
-    }
-    let userWeapon = selectedWeapon === 'rock' ? 'rock' : weapon === 'paper' ? 'paper' : 'scissors'; 
-    console.log(userWeapon); 
-    let botWeapon = computerChoice(); 
-
-    setTimeout(function() {
-        fight();
-    }, delayInMilliseconds);
-
-    display(); 
+    setTimeout(() => {
+        itemCount = document.getElementById(weapon); 
+        let selectedWeapon = () =>{
+            let type = str(weapon); 
+            return type.slice(0,type.length-4); 
+        }
+        let userWeapon = selectedWeapon === 'rock' ? 'rock' : weapon === 'paper' ? 'paper' : 'scissors'; 
+        console.log(userWeapon); 
+        let botWeapon = computerChoice(); 
+        userWeaponDisplay.src = imgTools.get(userWeapon); 
+        botWeaponDisplay.src = imgTools.get(botWeapon); 
+        fight(userWeapon,botWeapon);
+        display();
+    }, "500");
+     
 }
 
 function display(){
     playerItemCount.innerHTML = playerCount; 
     botItemCount.innerHTML = botCount;
 
-    userWeaponDisplay.src = ""; 
-
-    
-    
 }

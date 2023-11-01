@@ -2,6 +2,9 @@ h1{
     text-align: center;
 }
 
+body{
+    background-color: darkgrey;
+}
 .userWeapons{
     margin-left: auto; 
     border: thick solid rgb(25, 25, 119); 
@@ -16,6 +19,10 @@ h1{
 .botWeapons{
     border: thick solid red;
     float: left; 
+}
+
+.botWeapons img{
+    width: 50px;  
 }
 
 .roundTracker{
