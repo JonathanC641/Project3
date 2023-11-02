@@ -1,36 +1,103 @@
 h1{
     text-align: center;
+    font-size: 50px;
 }
 
 body{
     background-color: darkgrey;
 }
 
-.messageArea{
+a{
+    text-decoration: underline;
+    color: darkcyan;
+    font-size: 25px;
+}
+
+.rules{
     text-align: center;
 }
-.userWeapons{
-    margin-left: auto; 
+
+.messageArea{
+    text-align: center;
+    font: 25px bold; 
+    color: blue; 
+    position: relative;
+    top: 300px;
+    background-color: aliceblue;
+    margin-left: 500px; 
+    margin-right: 500px;
+    border-color: black;
+    border-style: solid;
+}
+
+
+/* User */
+.userWeapons{ 
     border: thick solid rgb(25, 25, 119); 
     float: right; 
+}
+
+.userWeapons th{
+    border: solid;
+}
+
+.userWeapons td{
+    border: solid;
+    width: 10px;
 }
 
 .userWeapons img{
     width: 50px; 
 }
 
+.currentUserTool{
+    text-align: center; 
+    float: right;
+    margin-right: 25%;
+}
+
+.currentUserTool img{
+    text-align: center; 
+    width:100px; 
+}
+
+/* Computer */
 .botWeapons{
     border: thick solid red;
     float: left; 
+}
+
+.botWeapons th{
+    border: solid; 
+}
+
+.botWeapons td{
+    border: solid;
 }
 
 .botWeapons img{
     width: 50px;  
 }
 
-.roundTracker{
+.currentBotTool{
+    text-align: center; 
+    float: left; 
+    margin-left: 25%;
+}
+.currentBotTool img{
+    text-align: center;
+    width: 100px;
+}
+
+/* Displays for current weapons and round results */
+
+.roundLog{
     text-align: center;
     padding-bottom: 85px;
+}
+.roundLog table{
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .roundTracker td{
@@ -47,8 +114,11 @@ body{
 
 .reset{
     text-align: center;
+    position: relative;
+    top: 400px;
 }
 
-th{
-    text-align: center;
+.reset button{
+    background-color: red;
+    width: 100px;
 }

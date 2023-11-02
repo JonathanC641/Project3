@@ -8,10 +8,14 @@
 
     <body onload="initialize();">
         <h1>XTREME ROCK PAPER SCISSORS</h1>
-        <div class="roundTracker">
+        <div class="rules">
+            <a href="rulesPage.html" target="_blank">Rules</a>
+        </div>
+        <div class="roundLog">
             <table>
-                <th>Rounds</th>
+                <th>Game Log:</th>
                 <tr id="log">
+                    
                 </tr>
             </table>
         </div>
@@ -23,13 +27,16 @@
                 <table id="player" class="userWeapons">
                     <th>Weapons</th>
                     <tr>
-                        <td><button onclick="game('rockUser');"><img src="rock.jpg"><span id="count">5</span></button></td>
+                        <td><button onclick="game('rockUser');"><img src="rock.jpg"></button></td>
+                        <td><span id="rockUser">5</span></td>  
                     </tr>
                     <tr>
-                        <td><button onclick="game('paperUser');"><img src ="paper.jpg"><span id="count">5</span></button></td>                    
+                        <td><button onclick="game('paperUser');"><img src ="paper.jpg"></button></td>  
+                        <td><span id="paperUser">5</span></td>                  
                     </tr>
                     <tr>
-                        <td><button onclick="game('scissorsUser');"><img src="scissors.jpg"></button><span id="count">5</span></td>                    
+                        <td><button onclick="game('scissorsUser');"><img src="scissors.jpg"></button></td>
+                        <td><span id="scissorsUser">5</span></td>                    
                     </tr>
                 </table>
             </div>
@@ -39,34 +46,37 @@
                 <table id="computer" class="botWeapons">
                     <th>Weapons</th>
                     <tr>
-                        <td><img src="rock.jpg"><span id="rockBot">5</span></button></td>
+                        <td><img src="rock.jpg"></button></td>
+                        <td><span id="rockBot">5</span></td>
                     </tr>
                     <tr>
-                        <td><img src="paper.jpg"><span id="paperBot">5</span></button></td>                    
+                        <td><img src="paper.jpg"></button></td>            
+                        <td><span id="paperBot">5</span></td>        
                     </tr>
                     <tr>
-                        <td><img src="scissors.jpg"><span id="scissorsBot">5</span></button></td>                    
+                        <td><img src="scissors.jpg"></button></td>               
+                        <td><span id="scissorsBot">5</span></td>     
                     </tr>
                 </table>
             </div>
             
-            <div class="userWeapons">
+            <div class="currentUserTool">
                 <h3>Player</h3>
                 <img src="" id="userTool">
             </div>
 
-            <div class="botWeapons ">
-                <h3>Computer</h3>
+            <div class="currentBotTool">
+                <h3>Steve</h3>
                 <img src="" id="botTool"> 
             </div>
             
 
-            <div class="messageArea"id="status">
-                Message Area
-
+            <div class="messageArea">
+                <h5>Notice</h5>
+                <p id="status"></p>
             </div>
             <div class="reset">
-                <button onclick="reset();">Reset</button>
+                <button id="resetBtn"onclick="reset();">Reset</button>
             </div>
 
         </div>
