@@ -4,21 +4,21 @@ const choiceDealer = new Map();
 const imgTools = new Map(); 
 const usesPerWeapon = new Map(); 
 const botUsesPerWeapon = new Map(); 
-let userTable, botTable, score, roundLog, playerItemCount, botItemCount, playerCount, botCount, weaponChoice, botWeaponDisplay, userWeaponDisplay, weaponUsed, messageBoard, resetButton;  
+let roundLog, playerItemCount, botItemCount, playerCount, botCount, weaponChoice, botWeaponDisplay, userWeaponDisplay, weaponUsed, messageBoard, resetButton, rounds, headerAdjuster;  
 
 
 function initialize(){  
-    userTable = document.getElementById("player");
-    botTable = document.getElementById("computer");  
-    roundLog = document.querySelector(".roundLog tr");
+    roundLog = document.getElementById("log");
     botWeaponDisplay = document.getElementById("botTool"); 
     userWeaponDisplay = document.getElementById("userTool"); 
     messageBoard = document.getElementById("status"); 
     resetButton = document.getElementById("resetBtn");
+    headerAdjuster = document.querySelector('#head');
 
     resetButton.addEventListener("mouseover", function(){
         this.style.backgroundColor = "green";
     });
+
     resetButton.addEventListener("mouseout", function(){
         this.style.backgroundColor = "red"; 
     });
@@ -30,22 +30,34 @@ function initialize(){
         botUsesPerWeapon.set(weapons[i],3); 
     }
 
-    console.log(imgTools.keys());
-    console.log(imgTools.values());
-
     playerCount = 5; 
     botCount = 5;  
+    rounds = 0; 
+    colCount = 1; 
 }
 
-function updateLog(newLog){
-    let newCell = roundLog.insertCell();
-    newCell.innerHTML = newLog; 
+function updateLog(winner,pTool,cTool){
+    colCount+=1; 
+    headerAdjuster.colSpan = colCount;
+
+    let roundNum = roundLog.rows[1].insertCell(); 
+    rounds+=1; 
+    roundNum.innerHTML = rounds; 
+
+    let playerTool = roundLog.rows[2].insertCell(); 
+    playerTool.innerHTML = pTool; 
+
+    let computerTool = roundLog.rows[3].insertCell(); 
+    computerTool.innerHTML = cTool; 
+
+    let result = roundLog.rows[4].insertCell();
+    result.innerHTML = winner; 
 }
 
 function updateMessageBoard(newMsg){
     setTimeout(()=>{
         messageBoard.innerHTML = newMsg; 
-    },100); 
+    },200); 
 }
 
 function updateItemCount(player, item, func){
@@ -55,8 +67,10 @@ function updateItemCount(player, item, func){
             botCount+=1; 
         }else if(botCount !== 0 && func === 'sub'){
             botCount-=1; 
+            botUsesPerWeapon.set(item,3); 
         }else{
             botCount = 0; 
+            updateMessageBoard("Choose another weapon!");
         }
         botItemCount.innerHTML = botCount; 
     }else{
@@ -65,27 +79,31 @@ function updateItemCount(player, item, func){
             playerCount+=1; 
         }else if(playerCount !== 0 && func === 'sub'){
             playerCount-=1; 
+            usesPerWeapon.set(item,3); 
         }else{
             playerCount = 0; 
+            updateMessageBoard("Choose another weapon!");
         }
         playerItemCount.innerHTML = playerCount; 
     }
 }
 
 function updateUses(list, tool){
-    let currentVal = 0; 
-    let newVal =0; 
+    let currentVal; 
+    let newVal; 
     currentVal = list.get(tool);
-    if(currentVal !== 0){
-        newVal = currentVal-1; 
-        list.set(tool,newVal); 
-    }else{
+    newVal = currentVal-1; 
+    if(newVal == 0){
         if(list === botUsesPerWeapon){
             updateItemCount('bot', tool, 'sub');
+            updateMessageBoard(`Steve's ${tool} broke!`);
         }else{
             updateItemCount('player', tool, 'sub');
+            updateMessageBoard(`Your ${tool} broke!`);
         }
         list.set(tool,3); 
+    }else{
+        list.set(tool,newVal); 
     }
 }
 
@@ -109,23 +127,21 @@ function fight(p1,p2){
     let playerChoice = choiceDealer.get(p1); 
     let botChoice = choiceDealer.get(p2);
 
-    console.log("User Value:", playerChoice); 
-    console.log("Bot Value:", botChoice);
     let result = (playerChoice + 1 ) % 3; 
 
     if(botChoice === playerChoice){
-        updateLog(`Steve: ${p2}\nPlayer: ${p1}\nWinner: Tie`);
+        updateLog("Tie", p1, p2);
         manageUses('both',p1,p2);
         updateMessageBoard("No winners :("); 
     }else if(botChoice === result){
-        updateLog(`Steve: ${p2}\nPlayer: ${p1}\nWinner: Steve`);
-        updateMessageBoard("Steve won!");
+        updateLog('Steve', p1, p2);
+        updateMessageBoard(`Steve won with ${p2}!`);
         manageUses('bot',p2); 
         updateItemCount('bot', p1, 'add');
         updateItemCount('player', p1, 'sub');  
     }else{
-        updateLog(`Steve: ${p2}\nPlayer:${p1}\nWinner: Player`);
-        updateMessageBoard("You won!");
+        updateLog("Player", p1,p2);
+        updateMessageBoard(`You won using ${p1}!`);
         manageUses('player',p1);
         updateItemCount('player', p2, 'add'); 
         updateItemCount('bot', p2, 'sub'); 
@@ -148,13 +164,22 @@ function game(weapon){
 
 
 function reset(){
-    for(let i=1;  i<numOfLogs; i++){
-        roundLog.deleteCell(i); 
-    }
     userWeaponDisplay.src = ""; 
     botWeaponDisplay.src = ""; 
-    playerItemCount.innerHTML = 5; 
-    botItemCount.innerHTML = 5; 
+    for(let i =0; i < weapons.length; i++){
+        playerItemCount = document.getElementById(`${weapons[i]}User`);
+        playerItemCount.innerHTML = 5; 
+
+        botItemCount = document.getElementById(`${weapons[i]}Bot`);
+        botItemCount.innerHTML = 5; 
+    }
+
+    // let row = roundLog.rows; 
+    // for(let i=1; i<row.length; i++){
+    //     for(let j=1; j < row[i].cells; j++){
+    //         row[i].deleteCell(j); 
+    //     }
+    // }
     
 }
 
