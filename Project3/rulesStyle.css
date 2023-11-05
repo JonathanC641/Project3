@@ -18,5 +18,10 @@ li{
 
 #head{
     text-align: center;
-    font-size: 15px;
+    font-size: 100px;
+    text-decoration: solid;
+    border-radius: 100px;
+    background-color: rgb(80, 80, 180);
+    margin-left: 25%;
+    margin-right: 25%;
 }
