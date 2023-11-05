@@ -4,7 +4,11 @@ const choiceDealer = new Map();
 const imgTools = new Map(); 
 const usesPerWeapon = new Map(); 
 const botUsesPerWeapon = new Map(); 
-let roundLog, playerItemCount, botItemCount, playerCount, botCount, weaponChoice, botWeaponDisplay, userWeaponDisplay, weaponUsed, messageBoard, resetButton, rounds, headerAdjuster;  
+const allRows = roundLog.rows;
+let roundLog, playerItemCount, botItemCount, 
+playerCount, botCount, weaponChoice, 
+botWeaponDisplay, userWeaponDisplay, messageBoard, 
+resetButton, rounds, headerAdjuster;  
 
 
 function initialize(){  
@@ -36,6 +40,23 @@ function initialize(){
     colCount = 1; 
 }
 
+//This is used to assure that 
+function stillHaveItems(){
+    if(playerCount === 0 && botCount === 0){
+        updateMessageBoard("No winner! Rematch? "); 
+        return false; 
+    }else if(playerCount === 0){
+        updateMessageBoard("Steve wins!"); 
+        return false; 
+    }else if(botCount === 0){
+        updateMessageBoard("You win!"); 
+        return false; 
+    }else{
+        return true; 
+    }
+}
+
+//Creates a new record in the log detailing the most recent match played 
 function updateLog(winner,pTool,cTool){
     colCount+=1; 
     headerAdjuster.colSpan = colCount;
@@ -119,10 +140,13 @@ function manageUses(player,tool,tool2){
 
 }
 
+
+//Randomizes the tool the computer selects 
 function computerChoice(){
     return weapons[parseInt(Math.random() *3)]; 
 }
 
+//Deals with who wins the match and which player loses or gains a weapon 
 function fight(p1,p2){
     let playerChoice = choiceDealer.get(p1); 
     let botChoice = choiceDealer.get(p2);
@@ -148,24 +172,31 @@ function fight(p1,p2){
     }
 }
 
-
+//This function emulates the game whenever the player selects a weapon 
 function game(weapon){ 
-    setTimeout(() => {
-        let selectedWeapon = weapon.slice(0,weapon.length-4); 
-        let userWeapon = selectedWeapon === 'rock' ? 'rock' : selectedWeapon === 'paper' ? 'paper' : 'scissors'; 
-        let botWeapon = computerChoice(); 
-        userWeaponDisplay.src = imgTools.get(userWeapon); 
-        botWeaponDisplay.src = imgTools.get(botWeapon); 
-        fight(userWeapon,botWeapon);
-    }, 150);
-    userWeaponDisplay.src = ""; 
-    botWeaponDisplay.src = ""; 
+    console.log(playerCount);
+    console.log(botCount);
+    if(stillHaveItems()){
+        setTimeout(() => {
+            let selectedWeapon = weapon.slice(0,weapon.length-4); 
+            let userWeapon = selectedWeapon === 'rock' ? 'rock' : selectedWeapon === 'paper' ? 'paper' : 'scissors'; 
+            let botWeapon = computerChoice(); 
+            userWeaponDisplay.src = imgTools.get(userWeapon); 
+            botWeaponDisplay.src = imgTools.get(botWeapon); 
+            fight(userWeapon,botWeapon);
+        }, 150);
+        userWeaponDisplay.src = ""; 
+        botWeaponDisplay.src = ""; 
+    }
 }
 
 
 function reset(){
     userWeaponDisplay.src = ""; 
     botWeaponDisplay.src = ""; 
+    botCount =5; 
+    playerCount = 5;
+    rounds = 0; 
     for(let i =0; i < weapons.length; i++){
         playerItemCount = document.getElementById(`${weapons[i]}User`);
         playerItemCount.innerHTML = 5; 
@@ -174,13 +205,22 @@ function reset(){
         botItemCount.innerHTML = 5; 
     }
 
-    // let row = roundLog.rows; 
-    // for(let i=1; i<row.length; i++){
-    //     for(let j=1; j < row[i].cells; j++){
-    //         row[i].deleteCell(j); 
-    //     }
-    // }
-    
+    for(let i = 0; i < weapons.length; i++){
+        usesPerWeapon.set(weapons[i], 3); 
+        botUsesPerWeapon.set(weapons[i],3); 
+    }
+
+    let testCount = 0; 
+
+    if(allRows[1].cells.length > 1){ //Prevents the last column from being deleted 
+        for (let i = 1; i < allRows.length; i++) {
+            let row = allRows[i]; 
+            for(let j =0; j < row.cells.length; j++){
+                row.deleteCell(-1);
+                console.log(testCount+=1); 
+            }
+        }
+    } 
 }
 
 

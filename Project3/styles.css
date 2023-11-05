@@ -3,6 +3,9 @@ h1{
     font-size: 50px;
 }
 
+h5{
+    margin-top: 0px;
+}
 body{
     background-color: darkgrey;
 }
@@ -12,14 +15,14 @@ a{
     color: darkcyan;
     font-size: 25px;
 }
-
-/* .title{
-    
-} */
-
-.rules{
-    text-align: center;
+p{
+    font-size: 20px;
 }
+
+table{
+    font-size: 30px;
+}
+
 
 .messageArea{
     text-align: center;
@@ -28,8 +31,8 @@ a{
     position: relative;
     top: 200px;
     background-color: aliceblue;
-    margin-left: 500px; 
-    margin-right: 500px;
+    margin-left: 25%; 
+    margin-right: 25%;
     border-color: black;
     border-style: solid;
 }
@@ -67,7 +70,7 @@ a{
 
 /* Computer */
 .botWeapons{
-    border: thick solid red;
+    border: thick solid rgb(37, 35, 35);
     float: left; 
 }
 
@@ -98,6 +101,7 @@ a{
 .roundLog{
     text-align: center;
     padding-bottom: 85px;
+    justify-content: center;
 }
 .roundLog table{
     margin-left: auto;
