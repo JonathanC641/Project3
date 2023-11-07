@@ -15,6 +15,10 @@ li{
     justify-content: center;
     list-style-position: inside;
     font-size: 30px;
+    background-color:rgb(51, 63, 202);
+    border-radius: 100px; 
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 #head{
@@ -22,7 +26,7 @@ li{
     font-size: 100px;
     text-decoration: solid;
     border-radius: 100px;
-    background-color: rgb(80, 80, 180);
+    background-color: rgb(51, 63, 202);
     margin-left: 25%;
     margin-right: 25%;
 }
