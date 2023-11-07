@@ -11,7 +11,8 @@ li{
 }
 
 .rulesView{
-    text-align: center;
+    display: flex;
+    justify-content: center;
     list-style-position: inside;
     font-size: 30px;
 }

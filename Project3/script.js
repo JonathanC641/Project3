@@ -3,10 +3,9 @@ const images = ['rock.jpg','paper.jpg', 'scissors.jpg']
 const choiceDealer = new Map(); 
 const imgTools = new Map(); 
 const usesPerWeapon = new Map(); 
-const botUsesPerWeapon = new Map(); 
-const allRows = roundLog.rows;
-let roundLog, playerItemCount, botItemCount, 
-playerCount, botCount, weaponChoice, 
+const botUsesPerWeapon = new Map();
+const botToolTracker = new Map();  
+let roundLog, playerItemCount, botItemCount, weaponChoice, 
 botWeaponDisplay, userWeaponDisplay, messageBoard, 
 resetButton, rounds, headerAdjuster;  
 
@@ -32,23 +31,34 @@ function initialize(){
         choiceDealer.set(weapons[i],i); 
         usesPerWeapon.set(weapons[i], 3); 
         botUsesPerWeapon.set(weapons[i],3); 
+        botToolTracker.set(weapons[i],5); 
     }
-
-    playerCount = 5; 
-    botCount = 5;  
     rounds = 0; 
     colCount = 1; 
 }
 
 //This is used to assure that 
 function stillHaveItems(){
-    if(playerCount === 0 && botCount === 0){
+    let playerCount = 0; 
+    let botCount = 0; 
+    for(let i =0; i < 3; i ++){
+        playerItemCount = document.getElementById(`${weapons[i]}User`);
+        botItemCount = document.getElementById(`${weapons[i]}Bot`);
+        if(playerItemCount.innerHTML > 0){
+            playerCount++; 
+        }
+        if(botItemCount.innerHTML > 0){
+            botCount++; 
+        }
+    }
+
+    if(botCount === 0 && playerCount === 0){
         updateMessageBoard("No winner! Rematch? "); 
         return false; 
     }else if(playerCount === 0){
         updateMessageBoard("Steve wins!"); 
         return false; 
-    }else if(botCount === 0){
+    }else if(botCount=== 0){
         updateMessageBoard("You win!"); 
         return false; 
     }else{
@@ -84,28 +94,30 @@ function updateMessageBoard(newMsg){
 function updateItemCount(player, item, func){
     if(player === 'bot'){
         botItemCount = document.getElementById(`${item}Bot`);
-        if(func === 'add'){
-            botCount+=1; 
-        }else if(botCount !== 0 && func === 'sub'){
-            botCount-=1; 
+        if(botItemCount.innerHTML !== 0 && func === 'add' && playerItemCount.innerHTML > 0){
+            let botVal = parseInt(botItemCount.innerHTML); 
+            botVal+=1;
+            botItemCount.innerHTML = botVal;  
+        }else if(botItemCount.innerHTML > 0 && func === 'sub'){
+            botItemCount.innerHTML-=1; 
             botUsesPerWeapon.set(item,3); 
         }else{
-            botCount = 0; 
-            updateMessageBoard("Choose another weapon!");
+            botItemCount.innerHTML = 0; 
         }
-        botItemCount.innerHTML = botCount; 
+        botToolTracker.set(item, botItemCount.innerHTML); 
     }else{
         playerItemCount = document.getElementById(`${item}User`);
-        if(func === 'add'){
-            playerCount+=1; 
-        }else if(playerCount !== 0 && func === 'sub'){
-            playerCount-=1; 
+        if(playerItemCount.innerHTML > 0 && func === 'add'){
+            let playerVal = parseInt(playerItemCount.innerHTML); 
+            playerVal+=1;
+            playerItemCount.innerHTML = playerVal;
+        }else if(playerItemCount.innerHTML > 0 && func === 'sub'){
+            playerItemCount.innerHTML-=1;             
             usesPerWeapon.set(item,3); 
         }else{
-            playerCount = 0; 
+            playerItemCount.innerHTML = 0; 
             updateMessageBoard("Choose another weapon!");
         }
-        playerItemCount.innerHTML = playerCount; 
     }
 }
 
@@ -143,7 +155,21 @@ function manageUses(player,tool,tool2){
 
 //Randomizes the tool the computer selects 
 function computerChoice(){
-    return weapons[parseInt(Math.random() *3)]; 
+    let randWeapon = weapons[parseInt(Math.random() *3)];
+    let prev = randWeapon; 
+    let tracker= 0;  
+    while(botToolTracker.get(randWeapon) === 0 && tracker < 3){
+        randWeapon = weapons[parseInt(Math.random() *3)];
+        if(prev !== randWeapon){
+            tracker+=1; 
+        } 
+    }
+    if(tracker === 3){
+        updateMessageBoard("You have won!")
+    }
+    
+    return randWeapon; 
+
 }
 
 //Deals with who wins the match and which player loses or gains a weapon 
@@ -173,9 +199,7 @@ function fight(p1,p2){
 }
 
 //This function emulates the game whenever the player selects a weapon 
-function game(weapon){ 
-    console.log(playerCount);
-    console.log(botCount);
+function game(weapon){
     if(stillHaveItems()){
         setTimeout(() => {
             let selectedWeapon = weapon.slice(0,weapon.length-4); 
@@ -184,18 +208,16 @@ function game(weapon){
             userWeaponDisplay.src = imgTools.get(userWeapon); 
             botWeaponDisplay.src = imgTools.get(botWeapon); 
             fight(userWeapon,botWeapon);
-        }, 150);
-        userWeaponDisplay.src = ""; 
-        botWeaponDisplay.src = ""; 
+        }, 200);
     }
+    userWeaponDisplay.src = ""; 
+    botWeaponDisplay.src = ""; 
 }
 
 
 function reset(){
     userWeaponDisplay.src = ""; 
     botWeaponDisplay.src = ""; 
-    botCount =5; 
-    playerCount = 5;
     rounds = 0; 
     for(let i =0; i < weapons.length; i++){
         playerItemCount = document.getElementById(`${weapons[i]}User`);
@@ -208,16 +230,16 @@ function reset(){
     for(let i = 0; i < weapons.length; i++){
         usesPerWeapon.set(weapons[i], 3); 
         botUsesPerWeapon.set(weapons[i],3); 
+        botToolTracker.set(weapons[i],5); 
     }
-
-    let testCount = 0; 
-
+    
+    const allRows = roundLog.rows;
     if(allRows[1].cells.length > 1){ //Prevents the last column from being deleted 
         for (let i = 1; i < allRows.length; i++) {
             let row = allRows[i]; 
-            for(let j =0; j < row.cells.length; j++){
+            for(let j = 1; j < row.cells.length; j++){
                 row.deleteCell(-1);
-                console.log(testCount+=1); 
+                j--;
             }
         }
     } 
