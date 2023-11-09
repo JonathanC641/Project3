@@ -219,6 +219,7 @@ function reset(){
     userWeaponDisplay.src = ""; 
     botWeaponDisplay.src = ""; 
     rounds = 0; 
+    updateMessageBoard("");
     for(let i =0; i < weapons.length; i++){
         playerItemCount = document.getElementById(`${weapons[i]}User`);
         playerItemCount.innerHTML = 5; 
