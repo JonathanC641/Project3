@@ -3,7 +3,7 @@ h1{
 }
 
 body{
-    background-color: cadetblue;
+    background-color: rgb(52, 182, 186);
 }
 
 li{
@@ -15,8 +15,8 @@ li{
     justify-content: center;
     list-style-position: inside;
     font-size: 30px;
-    background-color:rgb(51, 63, 202);
-    border-radius: 100px; 
+    background-color:rgba(35, 168, 235, 0.50);
+    border-radius: 10px;
     margin-left: 10%;
     margin-right: 10%;
 }
@@ -25,8 +25,8 @@ li{
     text-align: center;
     font-size: 100px;
     text-decoration: solid;
-    border-radius: 100px;
-    background-color: rgb(51, 63, 202);
+    border-radius: 10px;
+    background-color:rgba(35, 168, 235, 0.50);
     margin-left: 25%;
     margin-right: 25%;
 }

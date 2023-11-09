@@ -1,8 +1,3 @@
-/* @font-face {
-    font-family: ;
-    src: url();
-} */
-
 h1{
     text-align: center;
     font-size: 40px;
@@ -23,7 +18,7 @@ body{
 a{
     text-decoration: underline;
     color: rgb(2, 52, 52);
-    font-size: 25px;
+    font-size: 30px;
 }
 
 span{
@@ -131,7 +126,7 @@ p{
 .roundLog th, td{
     border: thick solid black;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 30px;
 }
 
 .weaponsDisplay{

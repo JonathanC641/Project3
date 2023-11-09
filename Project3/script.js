@@ -5,9 +5,10 @@ const imgTools = new Map();
 const usesPerWeapon = new Map(); 
 const botUsesPerWeapon = new Map();
 const botToolTracker = new Map();  
+const maxMatches = 10; 
 let roundLog, playerItemCount, botItemCount, weaponChoice, 
 botWeaponDisplay, userWeaponDisplay, messageBoard, 
-resetButton, rounds, headerAdjuster;  
+resetButton, rounds, headerAdjuster, playerWins, botWins;  
 
 
 function initialize(){  
@@ -35,6 +36,8 @@ function initialize(){
     }
     rounds = 0; 
     colCount = 1; 
+    playerWins = 0; 
+    botWins = 0; 
 }
 
 //This is used to assure that 
@@ -52,17 +55,26 @@ function stillHaveItems(){
         }
     }
 
-    if(botCount === 0 && playerCount === 0){
-        updateMessageBoard("No winner! Rematch? "); 
+    if(botCount === 0 && playerCount === 0){ 
         return false; 
     }else if(playerCount === 0){
-        updateMessageBoard("Steve wins!"); 
         return false; 
     }else if(botCount=== 0){
-        updateMessageBoard("You win!"); 
         return false; 
     }else{
         return true; 
+    }
+}
+
+
+//Reports the final winner
+function endgame(){
+    if(botWins === playerWins){
+        updateMessageBoard("Final Result: No winner! Rematch? "); 
+    }else if(botWins > playerWins){
+        updateMessageBoard("Final Result: Steve wins!"); 
+    }else{
+        updateMessageBoard("Final Result: You win!"); 
     }
 }
 
@@ -98,6 +110,7 @@ function updateItemCount(player, item, func){
             let botVal = parseInt(botItemCount.innerHTML); 
             botVal+=1;
             botItemCount.innerHTML = botVal;  
+            botWins+=1; 
         }else if(botItemCount.innerHTML > 0 && func === 'sub'){
             botItemCount.innerHTML-=1; 
             botUsesPerWeapon.set(item,3); 
@@ -111,6 +124,7 @@ function updateItemCount(player, item, func){
             let playerVal = parseInt(playerItemCount.innerHTML); 
             playerVal+=1;
             playerItemCount.innerHTML = playerVal;
+            playerWins+=1; 
         }else if(playerItemCount.innerHTML > 0 && func === 'sub'){
             playerItemCount.innerHTML-=1;             
             usesPerWeapon.set(item,3); 
@@ -121,6 +135,7 @@ function updateItemCount(player, item, func){
     }
 }
 
+//Update the uses a tool has left 
 function updateUses(list, tool){
     let currentVal; 
     let newVal; 
@@ -140,6 +155,7 @@ function updateUses(list, tool){
     }
 }
 
+//Processes which player's tools need to update the number of uses left 
 function manageUses(player,tool,tool2){
     if(player === 'player'){
         updateUses(usesPerWeapon, tool);
@@ -200,7 +216,7 @@ function fight(p1,p2){
 
 //This function emulates the game whenever the player selects a weapon 
 function game(weapon){
-    if(stillHaveItems()){
+    if(stillHaveItems() && rounds < maxMatches){
         setTimeout(() => {
             let selectedWeapon = weapon.slice(0,weapon.length-4); 
             let userWeapon = selectedWeapon === 'rock' ? 'rock' : selectedWeapon === 'paper' ? 'paper' : 'scissors'; 
@@ -208,6 +224,13 @@ function game(weapon){
             userWeaponDisplay.src = imgTools.get(userWeapon); 
             botWeaponDisplay.src = imgTools.get(botWeapon); 
             fight(userWeapon,botWeapon);
+            console.log(rounds); 
+            if(rounds === 10){
+                setTimeout(()=>{
+                    console.log("This event occurs."); 
+                    endgame(); 
+                }, 150); 
+            }
         }, 200);
     }
     userWeaponDisplay.src = ""; 
@@ -219,6 +242,9 @@ function reset(){
     userWeaponDisplay.src = ""; 
     botWeaponDisplay.src = ""; 
     rounds = 0; 
+    colCount = 0; 
+    playerWins = 0; 
+    botWins = 0; 
     updateMessageBoard("");
     for(let i =0; i < weapons.length; i++){
         playerItemCount = document.getElementById(`${weapons[i]}User`);
